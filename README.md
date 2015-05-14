@@ -1,10 +1,10 @@
-# mysql-janitor
-A set of Mysql cleanup tools for archiving and purging
+# Sweeper
+A set of Mysql cleanup tools for archiving and purging old data
 
 Features
 -------
-1. Archiving old data
-2. Purging old data
+1. Archive
+2. Purge
 
 Process
 -------
@@ -14,51 +14,31 @@ Process
 
 Configuration
 -------
-    mysql : {
-      host   : 'localhost',  
-      user   : 'user',
-      pass   : 'user'
-    }
+      mysql : {
+  	host	: "localhost",
+  	user 	: "root",
+  	password 	: "root",
+    database  : "promotexter_test"
+  },
 
-    job_execution : {
-      frequency       : 'daily'
-      execution_time  : '00:00' 
-    }
+  jobs : [
+  	{
+  		id 				   : 'clean_sms_q',
+  		table_name 		: 'sms_q',
+  		query_string 	: 'datediff(now(), date_created) > 100',
+  		description 	: 'Clear old transactions',
+      frequency     : 'hourly',
+      primary_key   : 'sms_q_id'
+  	} ,
+  ]
 
 
-#Features
-
-## Add Janitor
-
-POST REQUEST to /api/janitors/
-
-      Parameters (JSON):
-      
-      id                  - unique identifier of the janitor object
-      table_name          - the mysql table name of the target 
-      table_to_name       - the mysql table where to put the data before purging(optional)
-      condition           - the query string (valid mysql string)
-      description         - Thorough description of the job
-
-        Example:
-        {
-            id                  : 'clean_sms_q',
-            table_name          : 'sms_q',
-            table_to_name       : 'sms_q_archived',
-            condition           : 'date_diff(now(), date_created) > 60' -- greater than 60 days,
-            description         : 'Cleanup transactions older than 60 days'
-        }
-
-##Remove Janitor
-DELETE REQUEST to /api/janitors/
-
-    Parameter: janitor_id
+#API
+/initialize
     
-User Interface
------
-    1. View all janitors
-      - number of execution
-      - number of transactions processed
-    2. Delete janitor
-    3. Add janitor
-    4. Login / Logout
+  Load the application with the configuration from the file
+
+/run/:id
+
+  Run the sweeping using the job ID
+
