@@ -14,23 +14,23 @@ Process
 
 Configuration
 -------
-      mysql : {
-  	host	: "localhost",
-  	user 	: "root",
-  	password 	: "root",
-    database  : "promotexter_test"
-  },
-
-  jobs : [
-  	{
-  		id 				   : 'clean_sms_q',
-  		table_name 		: 'sms_q',
-  		query_string 	: 'datediff(now(), date_created) > 100',
-  		description 	: 'Clear old transactions',
-      frequency     : 'hourly',
-      primary_key   : 'sms_q_id'
-  	} ,
-  ]
+    mysql : {
+    	host	: "localhost",
+    	user 	: "root",
+    	password 	: "root",
+      database  : "promotexter_test"
+    },
+  
+    jobs : [
+    	{
+    		id 				   : 'clean_sms_q',
+    		table_name 		: 'sms_q',
+    		query_string 	: 'datediff(now(), date_created) > 100',
+    		description 	: 'Clear old transactions',
+        frequency     : 'hourly',
+        primary_key   : 'sms_q_id'
+    	} ,
+    ]
 
 
 #API
