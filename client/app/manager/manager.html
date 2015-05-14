@@ -1,0 +1,30 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+
+<div class="col-md-12">
+	<table class="table">
+		<tr>
+			<th>ID</th>
+			
+			<th>Description</th>
+			<th>Frequency</th>
+			<th>Primary Key</th>
+			<th>Table Name</th>
+			
+			<th>Query String</th>
+			<th>Action</th>
+		</tr>
+		<tr ng-repeat="j in jobs">
+			<td>{{ j._id }} </td>
+			
+			<td>{{ j.description }}</td>
+			<td>{{ j.frequency }}</td>
+			<td>{{ j.primary_key }}</td>
+			<td>{{ j.table_name }}</td>
+			<td>{{ j.query_string }}</td>
+			<td>
+				<a ng-click="run(j._id)">Run</a>
+			</td>
+		</tr>
+	</table>
+</div>
