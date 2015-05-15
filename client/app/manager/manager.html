@@ -1,30 +1,101 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h1>
+				{{config.platform }} Jobs
 
-<div class="col-md-12">
-	<table class="table">
-		<tr>
-			<th>ID</th>
+				<a class="btn btn-warning" ng-click="initialize()">Initialize from config</a>
+			</h1>
+
 			
-			<th>Description</th>
-			<th>Frequency</th>
-			<th>Primary Key</th>
-			<th>Table Name</th>
+			<table class="table">
+				<tr>
+					<th>ID</th>
+					
+					<th>Description</th>
+					<th>Frequency</th>
+					<th>Primary Key</th>
+					<th>Table Name</th>
+					<th>Query String</th>
+					<th>Status</th>
+					<th>Action</th>
+				</tr>
+				<tr ng-repeat="j in jobs">
+					<td>{{ j._id }} </td>
+					<td>{{ j.description }}</td>
+					<td>{{ j.frequency }}</td>
+					<td>{{ j.primary_key }}</td>
+					<td>
+						Master: {{ j.table_name }}
+
+						<div ng-if="j.archive_table_name">
+							Archive: {{ j.archive_table_name }}					
+						</div>
+					</td>
+					<td>{{ j.query_string }}</td>
+					<td>
+						<div class="bg" ng-class="{
+							'COMPLETED' : 'bg-success',
+							'ERROR' : 'bg-danger',
+						}[j.status]">
+							<b>{{ j.status }}</b>  {{ j.error }}
+						</div>
+
+						<br>
+						Started: {{ j.date_started | date }}
+						<br>
+						Rows: <span class="label label-info">{{ j.rows_read }}</span>
+						<br/>
+						TPS: <span class="label label-info">{{ j.tps }}</span>
+						<br>
+						Completed: {{ j.date_ended | date }}
+					</td>
+
+					<td>
+						<a class="btn btn-primary" ng-click="run(j._id)">Run</a>
+						<a class="btn btn-danger"  ng-click="deleteJob(j._id)">Delete</a>
+					</td>
+				</tr>
+			</table>
+
 			
-			<th>Query String</th>
-			<th>Action</th>
-		</tr>
-		<tr ng-repeat="j in jobs">
-			<td>{{ j._id }} </td>
-			
-			<td>{{ j.description }}</td>
-			<td>{{ j.frequency }}</td>
-			<td>{{ j.primary_key }}</td>
-			<td>{{ j.table_name }}</td>
-			<td>{{ j.query_string }}</td>
-			<td>
-				<a ng-click="run(j._id)">Run</a>
-			</td>
-		</tr>
-	</table>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-4">
+			<h3>Add Job</h3>
+			<form class="form" ng-submit="submitJob()">
+				<div class="form-group">
+					<label>Description</label>
+					<input class="form-control" type="text" ng-model="job.description">
+				</div>
+				<div class="form-group">
+					<label>PKEY</label>
+					<input class="form-control" type="text" ng-model="job.primary_key">
+				</div>
+				<div class="form-group">
+					<label>Table Name</label>
+					<input class="form-control" type="text" ng-model="job.table_name">
+				</div>
+				<div class="form-group">
+					<label>Archive Table Name</label>
+					<input class="form-control" type="text" ng-model="job.archive_table_name">
+				</div>
+				<div class="form-group">
+					<label>Query String</label>
+					<input class="form-control" type="text" ng-model="job.query_string">
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</form>
+		</div>
+
+		<div class="col-md-4">
+			{{ config}}
+		</div>
+	</div>
 </div>
