@@ -11,19 +11,6 @@ module.exports = {
   seedDB: true,
 
   platform : "PT2-SMPP",
-  mysql : {
-    	host	: "37.139.1asdad1.175",
-    	user 	: "ptxter_api",
-    	password 	: "ptxterv2_api",
-      database  : "promotexter"
-  },
-
-  mysql_slave : {
-      host      : "37.139.4.87",
-      user      : "ptxter_api",
-      password  : "ptxterv2_api",
-      database  : "promotexter"
-  },
 
   live_delete : false,
 
