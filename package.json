@@ -16,7 +16,7 @@
     "jsonwebtoken": "^4.2.2",
     "lodash": "~4.17.13",
     "method-override": "~1.0.0",
-    "mongoose": "~3.8.8",
+    "mongoose": "~5.7.6",
     "morgan": "~1.9.1",
     "mysql": "^2.6.2",
     "passport": "~0.2.0",
